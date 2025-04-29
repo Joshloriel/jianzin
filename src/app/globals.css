@@ -19,8 +19,21 @@
   }
 }
 
+* {
+    scroll-behavior: smooth;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.scroll-hidden {
+  scrollbar-width: none;
+}
+.scroll-hidden::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+/*******  de2b89a1-b1f8-41f6-adbb-d9adb3facbe4  *******/
