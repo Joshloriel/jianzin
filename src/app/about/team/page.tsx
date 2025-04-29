@@ -7,14 +7,6 @@ import { JIANZIN_TEAM, OTHERTEAM } from '@/components/dummy/team';
 import { Users, Award, Phone, ChevronRight, Mail, Linkedin } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-type TeamMember = {
-  name: string;
-  position: string;
-  image: StaticImageData;
-  bio?: string;
-  role?: string;
-};
-
 const TeamMembers = () => {
   // Animation variants
   const container = {
