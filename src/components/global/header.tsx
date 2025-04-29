@@ -2,8 +2,6 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
-import JianzinLogo from "../../../public/logo/IMG_9319.png";
 import { routes } from "@/network/routes";
 
 interface NavItem {

@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import PicturePlaceholder from '../../../public/img/placeholder.jpg';
-import { Flame, Camera, Sun, AlarmSmoke } from 'lucide-react';
+import { Flame, Camera, Sun } from 'lucide-react';
 import Link from 'next/link';
 
 export default function ProductsPage() {

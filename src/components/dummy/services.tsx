@@ -1,4 +1,4 @@
-import { Star, StarHalf, ArrowRight, Flame, ShieldCheck, Camera, Sun, AlarmSmoke, Users, Award, Phone, FireExtinguisher, ChevronRight, Mail, Linkedin, Droplets, Pointer } from "lucide-react";
+import {  Flame, ShieldCheck, Camera, Sun, FireExtinguisher, Droplets } from "lucide-react";
 
 
 const services = [

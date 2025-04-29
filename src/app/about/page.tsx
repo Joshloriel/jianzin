@@ -3,8 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import PicturePlaceholder from '../../../public/img/placeholder.jpg';
-import { Flame, ShieldCheck, Target, Gauge, HeartHandshake, Users } from 'lucide-react';
-import Link from 'next/link';
+import { Flame, ShieldCheck, Target, Gauge, HeartHandshake } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { routes } from '@/network/routes';
 
