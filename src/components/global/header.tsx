@@ -38,7 +38,7 @@ const navItems: NavItem[] = [
   //     { label: "Fire Drill & Training", path: routes.fireDrillTraining },
   //   ],
   // },
-  { label: "Projects & Clients", path: routes.projectsClients },
+  { label: "Projects & Clients", path: routes.projects },
   {
     label: "Resources",
     children: [

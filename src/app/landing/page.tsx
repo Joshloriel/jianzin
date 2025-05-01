@@ -1,20 +1,43 @@
 'use client';
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import ImgPlaceholder from "../../../public/img/placeholder.jpg";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { routes } from "@/network/routes";
 import { JIANZIN_TEAM } from "@/components/dummy/team";
 import { projects } from "@/components/dummy/projects";
 import { reviews } from "@/components/dummy/review";
 import { services } from "@/components/dummy/services";
-import { ArrowRight, Flame, Linkedin, Mail, Phone, ShieldCheck, Star, StarHalf } from "lucide-react";
+import { ArrowLeft, ArrowRight, Flame, Linkedin, Mail, Phone, ShieldCheck, Star, StarHalf, X } from "lucide-react";
+import ProjectModal from "@/components/modals/projects";
 
 function Landing() {
   const router = useRouter();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
+  const openModal = (index: number) => {
+    setCurrentIndex(index);
+    setIsModalOpen(true);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    document.body.style.overflow = 'auto';
+  };
+
+  const navigateProject = (direction: 'prev' | 'next') => {
+    setCurrentIndex((prev) => {
+      if (direction === 'prev') {
+        return prev === 0 ? projects.length - 1 : prev - 1;
+      } else {
+        return prev === projects.length - 1 ? 0 : prev + 1;
+      }
+    });
+  };
 
   return (
     <div className="w-full bg-zinc-900 text-gray-100 overflow-hidden">
@@ -237,67 +260,80 @@ function Landing() {
 
       {/* Projects Section */}
       <section className="py-20 bg-zinc-800">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div 
-            className="text-center mb-16"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-3xl font-bold mb-4">Recent Projects</h2>
-            <div className="w-20 h-1 bg-red-600 mx-auto mb-6"></div>
-            <p className="text-zinc-400 max-w-2xl mx-auto">
-              Explore our successful implementations across various sectors
-            </p>
-          </motion.div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 h-[20rem]">
-            {projects.map((project, index) => (
-              <motion.div
-                key={index}
-                className="group relative overflow-hidden rounded-xl shadow-lg"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <div className="aspect-w-16 aspect-h-9 overflow-hidden">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+      <div className="max-w-7xl mx-auto px-6">
+        {/* Header */}
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+        >
+          <h2 className="text-3xl font-bold mb-4">Recent Projects</h2>
+          <div className="w-20 h-1 bg-gradient-to-r from-red-900 to-red-600 mx-auto mb-6 rounded-full"></div>
+          <p className="text-zinc-400 max-w-2xl mx-auto">
+            Explore our successful implementations across various sectors
+          </p>
+        </motion.div>
+
+        {/* Project Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {projects.slice(0, 3).map((project, index) => (
+            <motion.div
+              key={index}
+              className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+            >
+              <div className="aspect-w-16 aspect-h-9 h-64">
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <div className="hover:hidden  absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-100 group-hover:opacity-0 transition-opacity duration-300 flex flex-col justify-end p-6">
                   <h3 className="text-xl font-bold text-white mb-2">
                     {project.title}
                   </h3>
-                  <p className="text-gray-300 text-sm">{project.description}</p>
-                  <button className="mt-4 self-start bg-red-800 hover:bg-red-700 text-white text-sm font-medium py-2 px-4 rounded transition-colors duration-300">
-                    View Details
-                  </button>
-                </div>
-                {/* <motion.div
-                  className="absolute inset-0 flex items-center justify-center"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <motion.div
-                    className="cursor-pointer animate-pulse"
-                    // onClick={() => router.push(`/projects/${project.id}`)}
-                    animate={{ opacity: [1, 0] }}
-                    transition={{ duration: 3, delay: 3 }}
-                  >
-                    <Pointer  className="w-20 h-20 text-red-800 opacity-40 group-hover:opacity-0" />
-                  </motion.div>
-                </motion.div> */}
-              </motion.div>
-            ))}
-          </div>
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                <h3 className="text-xl font-bold text-white mb-2">
+                  {project.title}
+                </h3>
+                <p className="text-gray-300 text-sm mb-4">{project.description}</p>
+                <button 
+              className="self-start cursor-pointer bg-red-800 hover:bg-red-700 text-white text-sm font-medium py-2 px-4 rounded transition-colors duration-300"
+              onClick={() => openModal(index)}
+            >
+              View Details
+            </button>
+              </div>
+            </motion.div>
+          ))}
         </div>
-      </section>
+
+        {/* Modal */}
+        <ProjectModal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          projects={projects}
+          currentIndex={currentIndex}
+          navigateProject={navigateProject}
+        />
+
+         <div className="text-center mt-12">
+      <button 
+        onClick={() => router.push(routes.projects)}
+        className="px-6 py-3 bg-zinc-700 hover:bg-zinc-600 text-white font-medium rounded-lg transition-colors cursor-pointer"
+      >
+        View All Projects
+      </button>
+    </div>
+      </div>
+    </section>
 
       {/* our team */}
       <div className="w-full py-20 bg-zinc-900 border-t border-zinc-800">

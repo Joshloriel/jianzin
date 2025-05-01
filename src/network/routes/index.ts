@@ -24,10 +24,10 @@ const routes = {
   fireDrillTraining: "/services/fire-drill-training",
 
   // Projects & Clients
-  projectsClients: "/projects-clients",
+  projects: "/projects/",
 
   // Resources
-  blogSafetyTips: "/resources/blog-safety-tips",
+  blogSafetyTips: "/blogAndSafetyTips/",
   downloadables: "/resources/downloadables",
   autoPdfGenerator: "/resources/auto-pdf-generator",
 };
